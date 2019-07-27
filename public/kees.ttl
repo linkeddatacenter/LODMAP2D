@@ -1,0 +1,28 @@
+#
+# Copyright (c) 2019 LinkedData.Center. All rights reserved.
+#
+@prefix bgo: <http://linkeddata.center/lodmap-bgo/v1#> .
+
+<urn:lodmap2d:route:default> bgo:requires 
+	"https://raw.githubusercontent.com/linkeddatacenter/LODMAP2D/master/tests/data/accounts.ttl" ,
+	"https://raw.githubusercontent.com/linkeddatacenter/LODMAP2D/master/tests/data/bubble_view.ttl" ;
+	bgo:about "http://lodmap2d.linkeddata.cloud/resource/bubble_view"
+.
+
+<urn:lodmap2d:route:table> bgo:requires 	
+	"https://raw.githubusercontent.com/linkeddatacenter/LODMAP2D/master/tests/data/accounts.ttl" ,
+	"https://raw.githubusercontent.com/linkeddatacenter/LODMAP2D/master/tests/data/table_view.ttl" ;
+	bgo:about "http://lodmap2d.linkeddata.cloud/resource/table_view"
+.
+
+<urn:lodmap2d:route:partition> bgo:requires 	
+	"https://raw.githubusercontent.com/linkeddatacenter/LODMAP2D/master/tests/data/accounts.ttl" ,
+	"https://raw.githubusercontent.com/linkeddatacenter/LODMAP2D/master/tests/data/$1.ttl" ;
+	bgo:about "http://lodmap2d.linkeddata.cloud/resource/$1"
+.
+
+<urn:lodmap2d:route:account> bgo:requires 	
+	"https://raw.githubusercontent.com/linkeddatacenter/LODMAP2D/master/tests/data/details_view.ttl" ,
+	"https://raw.githubusercontent.com/linkeddatacenter/LODMAP2D/master/tests/data/$1.ttl" ;
+	bgo:about "http://lodmap2d.linkeddata.cloud/resource/$1"
+.

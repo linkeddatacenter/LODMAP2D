@@ -1,0 +1,51 @@
+#
+# Copyright (c) 2019 LinkedData.Center. All rights reserved.
+#
+# Please test before publishing with http://rdf-translator.appspot.com/
+@prefix bgo: <http://linkeddata.center/lodmap-bgo/v1#> .
+@prefix resource: <http://mef.linkeddata.cloud/resource/> .
+
+resource:account_1 a bgo:Account ;
+    bgo:versionId "2019" ;
+    bgo:richDescription "Il rimborso dei titolo del debito statale tiene conto del: <ul><li>pagamento delle quote capitale sui titoli del debito statale</li><li>rimborso del capitale relativo a buoni postali fruttiferi</li><li>rimborso alla Banca d'Italia del controvalore delle lire presentate al cambio per il ritiro dalla circolazione</li><li>rimborso passività a carico dello Stato</li></ul>"@it ;
+	bgo:hasHistoryRec (
+        resource:account_1_rec1 
+        resource:account_1_rec2 
+    ) ;
+    bgo:hasPart
+    	resource:account_1_part1 ,
+    	resource:account_1_part2 ,
+    	resource:account_1_part3 
+    ;
+    	
+   	# Labels
+   	bgo:notAvailableTrendAccountLabel "Non disponibile"@it ;
+   	bgo:historicalPerspectiveTitle "Storico dell'azione"@it ;
+    bgo:drilldownPerspectiveTitle "Dettaglio capitoli di spesa"@it 
+.
+
+
+resource:account_1_rec1 a bgo:HistoryRec ;
+    bgo:versionId "2018" ;
+    bgo:amount 980.00
+.
+
+
+resource:account_1_rec2 a bgo:HistoryRec ;
+    bgo:versionId "2017" ;
+    bgo:amount 1100.00
+.
+
+resource:account_1_part1 a bgo:PartialAmount ;
+	bgo:title "account_1_part 1" ;
+    bgo:amount 110.00
+.
+resource:account_1_part2 a bgo:PartialAmount ;
+	bgo:title "account_1_part 2" ;
+    bgo:amount 120.00
+.
+
+resource:account_1_part3 a bgo:PartialAmount ;
+	bgo:title "account_1_part 3" ;
+    bgo:amount 130.00
+.

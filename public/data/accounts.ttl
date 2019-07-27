@@ -1,0 +1,187 @@
+#
+# Copyright (c) 2019 LinkedData.Center. All rights reserved.
+#
+# Please test before publishing with http://rdf-translator.appspot.com/
+@prefix bgo: <http://linkeddata.center/lodmap-bgo/v1#> .
+@prefix resource: <http://mef.linkeddata.cloud/resource/> .
+
+
+resource:budget a bgo:BigPicture ;   
+    bgo:label "stato"@it ;
+    bgo:title "legge di Bilancio 2019"@it ;
+    bgo:description "Dati di spesa relativi alla Legge di Bilancio approvata per l'esercizio finanziario 2019" ;
+    bgo:richDescription "This use <b>html</b> and should be scrollable"@it ;
+    bgo:hasPartitions (
+        resource:ministeri 
+        resource:missioni
+    ) ;
+    bgo:hasAccount
+        resource:account_1 ,
+        resource:account_2 ,
+        resource:account_3 ,
+        resource:account_4 , 
+        resource:account_5 , 
+        resource:account_6 
+    ;
+    
+    bgo:hasTrendColorScheme resource:trend_color_scheme ;
+    bgo:hasTotalizer resource:totalizer ;
+    bgo:hasTableView resource:table_view ;
+    bgo:hasSearchWidget resource:search_widget ;
+    bgo:hasScalingFunction resource:scaling_function ;
+    
+    # Labels
+    
+    # Table view labels
+.
+
+resource:trend_color_scheme a bgo:TrendColorScheme ;
+    bgo:title "Variazione rispetto alla precedente legge di bilancio"@it;
+    bgo:hasNATrend [ bgo:label "N.D.";  bgo:rgbColor "x00000" ];
+    bgo:hasVeryDecreasingTrend [ bgo:label "-25%"; bgo:threshold -0.25; bgo:rgbColor "x00000" ];
+    bgo:hasDecreasingTrend [ bgo:label "-5%"; bgo:threshold -0.05; bgo:rgbColor "x00000" ];
+    bgo:hasStableTrend [ bgo:label "0%"; bgo:rgbColor "x00000" ];
+    bgo:hasIncreasingTrend [ bgo:label "5%"; bgo:threshold 0.05; bgo:rgbColor "x00000" ];
+    bgo:hasVeryIncreasingTrend [ bgo:label "25%"; bgo:threshold 0.25; bgo:rgbColor "x00000" ];
+.
+
+resource:totalizer a bgo:Totalizer ;
+    bgo:totalPrintfTemplate "Totale: € %s"@it ;
+    bgo:totalFilteredPrintfTemplate "Spese evidenziate: € %s (%s%% del tot.)"@it 
+.
+
+resource:search_widget a bgo:SearchWidget ;
+    bgo:label "Cerca"@it 
+.
+
+resource:scaling_function a bgo:ScalingFunction ;
+	bgo:hasMinBubbleSize  4 ;  # in pixel
+	bgo:hasMaxBubbleSize  50  # in percentuale rispetto al canvass
+.
+
+resource:table_view a bgo:TableView ;
+    bgo:isPartOf resource:budget ;
+    bgo:hasSearchWidget resource:search_widget ;
+    bgo:headerColumn1Label "Nome azione"@it ;
+    bgo:headerColumn2Label "Spesa"@it ;
+    bgo:headerColumn3Label "Var. dal bilancio precedente"@it ;
+    bgo:headerColumn4Label "Descrizione"@it ;
+    bgo:paginatorLabel "Righe per pagina"@it ;
+    bgo:paginatorPrintfTemplate "%-% di %s"@it ;
+.
+
+#############################################
+# Partitions
+#############################################
+
+#### MINISTERI ###########
+resource:ministeri a bgo:Partition ;
+	bgo:label "ministero"@it;
+	bgo:paritionId "ministeri" ;
+    bgo:isPartOf resource:budget ;
+    bgo:hasPart 
+        resource:economia ,
+        resource:istruzione ,
+        resource:interno
+.
+
+resource:economia a bgo:AccountSet ;
+    bgo:isPartOf resource:ministeri ;
+    bgo:label "economia"@it ;
+    bgo:title "Ministero Economia e Finanze" ;
+    bgo:description "Capitoli di spesa relativi al Ministero dell' Economia e delle Finanze"@it ;
+    bgo:richDescription "This use <b>html</b> and should be scrollable"@it ;
+    bgo:hasAccount
+        resource:account_1 ,
+        resource:account_2 
+.
+
+resource:istruzione a bgo:AccountSet ;
+    bgo:isPartOf resource:ministeri ;
+    bgo:label "istruzione"@it ;
+    bgo:title "Ministero dell'istruzione"@it ;
+    bgo:hasAccount
+        resource:account_3 ,
+        resource:account_4 
+.
+
+resource:interno a bgo:AccountSet  ;
+    bgo:isPartOf resource:ministeri ;
+    bgo:label "istruzione"@it ;
+    bgo:title "Ministero dell'istruzione"@it ;
+    bgo:hasAccount
+        resource:account_5 ,
+        resource:account_6  
+.
+
+
+
+#### MISSIONI ###########
+resource:missioni a bgo:Partition ;
+	bgo:label "missione"@it; ;
+    bgo:isPartOf resource:budget ;
+    bgo:hasPart 
+        resource:missione_1 
+.
+
+
+resource:missione_1 a bgo:AccountSet ;
+    bgo:label "missione 1"@it ;
+    bgo:title "Missione di esempio"@it ;
+    bgo:richDescription "Contiene solo due account, gli altri sono in una partzione 'altro'"@it ;
+    bgo:hasAccount
+        resource:account_1 ,
+        resource:account_2  
+.
+
+
+#############################################
+# Accounts
+############################################# 
+resource:account_1 
+	bgo:accountId "account_1" ;
+    bgo:amount 1000.00 ;
+    bgo:referenceAmount 950.00 ;
+    bgo:title "Rimborso debito pubbblico"@it ;
+    bgo:description "Rimborso titoli del debito statale"@it 
+.
+
+resource:account_2
+	bgo:accountId "account_2" ;
+    bgo:amount 100.00 ;
+    bgo:referenceAmount 95.00 ;
+    bgo:title "titolo account_2"@it ;
+    bgo:description "descrizione account_2"@it 
+.
+
+resource:account_3 
+	bgo:accountId "account_3" ;
+    bgo:amount 100.00 ;
+    bgo:referenceAmount 95.00 ;
+    bgo:title "titolo account_3"@it ;
+    bgo:description "descrizione account_3"@it 
+.
+
+resource:account_4 
+	bgo:accountId "account_4" ;
+    bgo:amount 100.00 ;
+    bgo:referenceAmount 95.00 ;
+    bgo:title "titolo account_4"@it ;
+    bgo:description "descrizione account_4"@it 
+.
+
+resource:account_5 
+	bgo:accountId "account_5" ;
+    bgo:amount 100.00 ;
+    bgo:referenceAmount 95.00 ;
+    bgo:title "titolo account_5"@it ;
+    bgo:description "descrizione account_5"@it 
+.
+
+resource:account_6 
+	bgo:accountId "account_6" ;
+    bgo:amount 100.00 ;
+    bgo:referenceAmount 95.00 ;
+    bgo:title "titolo account_6"@it ;
+    bgo:description "descrizione account_6"@it 
+.

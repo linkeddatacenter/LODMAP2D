@@ -1,3 +1,1 @@
-{
-	"dataEndpoint": "/data"
-}
+[{ "regexp":".*" , "tagets": [ "/sample.ttl"] }]

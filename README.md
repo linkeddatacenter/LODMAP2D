@@ -3,31 +3,46 @@
 LODMAP2D è una applicazione  per esplorare interattivamente una grande quantità di informazioni senza mai  perdere la visione d'insieme [vedi la presentazione](https://docs.google.com/presentation/d/14OPAIxZoxCuwYo7fmso2bL4TAMcFTFO5ryEXhdsOSus/edit?usp=sharing)
 
 Tecnicamente LODMAP2D è una single page application sviluppata nel framework [Vue](https://vuejs.org/) in accordo alle specifiche [SOLID](https://github.com/solid/solid-spec) e in grado di renderizzare alcuni concetti descritti nella [Bubble Graph Ontology](http://linkeddata.center/lodmap-bgo/v1).
+
 In particolare LODVIEW è in grado di visualizzare soggetti di tipo:
 
 - **bgo:Account** per rappresentare una generica informazione quantitativa storicizzata e visualizzata nelle sue varie prospettive (metadati, storica, drill-down, social, etc)
 - **bgo:BigPicture** per visualizzare un insieme di bgo:Account come grafico a bolle, partizioni o come tabella
 
+
+## Usare LODMAP2D
+
+Le funzioni di LODMAP2D sono richiamabili attraverso un alcune URL gestite direttamente dalla applicazione, ed in particolare:
+
+| url template | azione |
+|------------- |------- |
+| /{?s} | visualizza un soggetto di tipo bgo:BigPicture come un insieme di bolle |
+| /table{?s} | visualizza un soggetto di tipo bgo:TableView come tabella |
+| /account/{account_id} | visualizza un soggetto di tipo bgo:Account |
+| /credits | visualizza la pagina di crediti |
+| /terms  visualizza la pagina termini e condizioni |
+| /partition/{partition_id}{?s} | visualizza un soggetto di tipo bgo:Partition |
+
+
+Il parametro *s* permette di filtrare nella visualizzazione gli account il cui titolo, la cui descrizione o la cui id contiene, anche parzialmente, la stringa passata nel parametro "s".
+
+
 ## dati
 
-I dati sono letti dalla applicazione da un endpoint che espone le seguenti risorse:
+Ad ogni pagina è associato un URI:
 
-- **/accounts** che contiene informazioni sugli bolle da visualizzare e sulle modalità di visualizzazione
-in bolle, tabelle e partizioni
-- **/account/{account id}** che contiene informazioni specifiche per l'account il cui id è {account id}
+- **urn:lodmap2d:page:bubbles** che contiene informazioni sulle bolle da visualizzare come blob
+- **urn:lodmap2d:page:bubbles:table** che contiene informazioni sulle bolle da visualizzare come tabella
+- **urn:lodmap2d:page:bubbles:partition** che contiene informazioni sulle bolle da visualizzare come partizione
+- **urn:lodmap2d:page:account/{account id}** che contiene informazioni specifiche per l'account con l'id specificato
 
-Per default l'endpoint è */data* ed è locale all'applicazione.
+I dati necessari al rendering delle varie pagine sono caricati attraverso le regole 
+definite nel file public/config.js. Per default sono caricati i dati presenti nel file 
+[sample.ttl](sample.ttl).
 
-E' possibile modificare l'url dell'endpoint editando il file public/config.js.
+nella directory *doc/config* è possibile trovare alcuni esempi di di configurazione più articolati.
 
-La tecnologia con cui sono forniti i dati può essere:
-
-- normali file contenenti dati rdf serializati con turtle
-- risorse esposte da una Linked Data Platform
-- APIs RESTful esposte da un server che supportano serializzazione RDF
-- query su un RDF graph database (i.e. enterprise knowledge graph)
-
-Se richiesto, LODMAP2D può autenticarsi sugli endpoint attraverso WebId.
+Se le risorse lo richiedono, LODMAP2D può autenticarsi sugli endpoint attraverso il WebIdd ell'utente.
  
 
 ## Using the docker image published on docker hub
@@ -67,41 +82,26 @@ Free docker resources with:
 docker rm -f lodmap2d
 ```
 
-## Usare LODMAP2D
-
-Le funzioni di LODMAP2D sono richiamabili attraverso un alcune URL gestite direttamente dalla applicazione, ed in particolare:
-
-| url template | azione |
-|------------- |------- |
-| /{?s,embed} | visualizza un soggetto di tipo bgo:BigPicture come un insieme di bolle |
-| /table{?s,embed} | visualizza un soggetto di tipo bgo:TableView come tabella |
-| /account/{account_id}{?embed} | visualizza un soggetto di tipo bgo:Account |
-| /credits | visualizza la pagina di crediti |
-| /terms  visualizza la pagina termini e condizioni |
-| /partition/{partition_id}{?s,embed} | visualizza un soggetto di tipo bgo:Partition |
-
-
-I parametri *s* e *embed* hanno il seguente significato:
-
-- **s**: permette di specificare un criterio di selezione che il renderer può utilizzare per enfatizzare
-alcuni elementi della visualizzazione. LODMAP2D utilizza questo parametro per enfatizzare nella visualizzazione gli account il cui titolo, la cui descrizione o la cui uri contiene , anche parzialmente la stringa passata nel parametro "s".
-- **embed**: se presente, header e footer vengono nascosti. Utile per incorporare LODMAP2D in un iframe.
-
 # Personalizzazioni
 
 E' possibile personalizzare l'applicazione sovrascrivendo un insieme di file:
 
 - tutti i file contenuti nella directory public:
-   - il file index.html può essere personalizzato per inserire snippet di tracciamento (es. google analitics) o css privati, per modificare il titolo della applicazione e i parametri per il SEO.
+   - il file config.js permette di definire da dove vengono presi i dati
+   - il file index.html può essere personalizzato per inserire snippet di tracciamento (es. google analytics) o css privati, per modificare il titolo della applicazione e i parametri per il SEO.
    - i file favicon* possono essere modificati a piacere così come i loghi
+   - il file preview.png* per modificare l'immagine di riferimento nei social
    - il file IE_alert per modificare l'alert a fronte di un browser non compatibile
+   
+E' sconsigliato aggiungere file in questa directory.
 
 - tutti i template contenuti nella directory src/custom ed in particolare:
-   - il file Credit.vue
-   - il file TermAndConditions.vue
-   - il file Header.vue per personalizzare la barra del header
-   - il file Footer.vue per personalizzare la barra del footer
-   - il file Menu.vue per personalizzare il menu
+   - il file Credits.vue per personalizzare la pagina di credits
+   - il file TermAndConditions.vue  per personalizzare la pagina di termini e condizioni
+   - il file BurgerMenu.vue per personalizzare il menu
+   - il file SocialSharing.vue
+   - il file FooterMenu.vue per personalizzare la barra del footer
+   - il file Copyright.vue
 
 Vedi un esempio nel progetto https://github.com/g0v-it/web-budget
 
